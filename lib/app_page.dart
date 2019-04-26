@@ -12,7 +12,7 @@ class AppPage extends StatefulWidget {
 }
 
 class _AppPageState extends State<AppPage> {
-  final List<BottomNavigationBarItem> _BottomTabs = [
+  final List<BottomNavigationBarItem> _bottomTabs = [
     BottomNavigationBarItem(icon: Icon(CupertinoIcons.home), title: Text("首页")),
     BottomNavigationBarItem(
         icon: Icon(CupertinoIcons.search), title: Text("分类")),
@@ -24,13 +24,13 @@ class _AppPageState extends State<AppPage> {
 
   final List pages = [MainPage(), CategoryPage(), CartPage(), MinePage()];
 
-  int currentIndex = 0;
+  int _currentIndex = 0;
   var currentPage;
 
   @override
   void initState() {
     super.initState();
-    currentPage = pages[currentIndex];
+    currentPage = pages[_currentIndex];
   }
 
   @override
@@ -38,13 +38,13 @@ class _AppPageState extends State<AppPage> {
     return Scaffold(
       backgroundColor: Color.fromRGBO(244, 245, 245, 1.0),
       bottomNavigationBar: BottomNavigationBar(
-        items: _BottomTabs,
-        currentIndex: currentIndex,
+        items: _bottomTabs,
+        currentIndex: _currentIndex,
         type: BottomNavigationBarType.fixed,
         onTap: (index) {
           setState(() {
-            currentIndex = index;
-            currentPage = pages[currentIndex];
+            _currentIndex = index;
+            currentPage = pages[_currentIndex];
           });
         },
       ),
