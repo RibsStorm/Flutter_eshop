@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import './cart/cart_page.dart';
 import './category/category_page.dart';
 import './main/main_page.dart';
@@ -31,6 +33,9 @@ class _AppPageState extends State<AppPage> {
   void initState() {
     super.initState();
     currentPage = pages[_currentIndex];
+
+    //设定初始化的标注图尺寸
+    ScreenUtil(width: 750, height: 1334)..init(context);
   }
 
   @override
