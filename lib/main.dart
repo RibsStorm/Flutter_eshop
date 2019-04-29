@@ -11,7 +11,7 @@ class MyAPP extends StatelessWidget {
       child: MaterialApp(
         title: '百姓生活+',
         theme: ThemeData(
-          primaryColor: Colors.pinkAccent
+          primaryColor: Colors.lightBlueAccent
         ),
         debugShowCheckedModeBanner: false,
         home: AppPage(),

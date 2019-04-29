@@ -33,13 +33,13 @@ class _AppPageState extends State<AppPage> {
   void initState() {
     super.initState();
     currentPage = pages[_currentIndex];
-
-    //设定初始化的标注图尺寸
-    ScreenUtil(width: 750, height: 1334)..init(context);
   }
 
   @override
   Widget build(BuildContext context) {
+    //设定初始化的标注图尺寸
+    ScreenUtil.instance = ScreenUtil(width: 750, height: 1334)..init(context);
+
     return Scaffold(
       backgroundColor: Color.fromRGBO(244, 245, 245, 1.0),
       bottomNavigationBar: BottomNavigationBar(

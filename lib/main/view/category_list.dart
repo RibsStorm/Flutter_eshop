@@ -15,9 +15,9 @@ class MainCategoryLit extends StatelessWidget {
       child: Column(
         children: <Widget>[
           Image.network(
-            item['iamge'],
-            width: ScreenUtil().setWidth(95),
-            height: ScreenUtil().setHeight(95),
+            item['image'],
+            width: ScreenUtil().setWidth(93),
+            height: ScreenUtil().setHeight(93),
           ),
           Text(item['mallCategoryName']),
         ],
@@ -33,12 +33,13 @@ class MainCategoryLit extends StatelessWidget {
     }
 
     return Container(
-      height: ScreenUtil().setHeight(320),
+      height: ScreenUtil().setHeight(350),
+      padding: EdgeInsets.all(4.0),
       child: GridView.count(
         crossAxisCount: 5,
-        padding: EdgeInsets.all(6.0),
+        padding: EdgeInsets.all(4.0),
         children: categoryList.map((item) {
-          categoryItem(context, item);
+          return categoryItem(context, item);
         }).toList(),
       ),
     );

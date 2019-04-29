@@ -7,6 +7,7 @@ import 'view/ad_banner_view.dart';
 import 'view/category_list.dart';
 import 'view/leader_view.dart';
 import 'view/swiper_view.dart';
+import 'view/recommend_view.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -33,24 +34,32 @@ class _MainPageState extends State<MainPage> {
               String adImg = data['advertesPicture']['PICTURE_ADDRESS'];
               String leaderUrl = data['shopInfo']['leaderImage'];
               String leaderPhone = data['shopInfo']['leaderPhone'];
+              List<Map> recommendList = (data['recommend'] as List).cast();
 
-              return Column(
-                children: <Widget>[
-                  ///1.轮播图
-                  SwiperView(swiperList: swiper),
 
-                  ///2.gridview 商品列表
-                  MainCategoryLit(categoryList: categoryList),
+              return SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                    ///1.轮播图
+                    SwiperView(swiperList: swiper),
 
-                  ///3.小的宣传栏
-                  ADBanner(adBannerImg: adImg),
+                    ///2.gridview 商品列表
+                    MainCategoryLit(categoryList: categoryList),
 
-                  ///4.店长电话
-                  LeaderView(
-                    leaderUrl: leaderUrl,
-                    leaderPhone: leaderPhone,
-                  )
-                ],
+                    ///3.小的宣传栏
+                    ADBanner(adBannerImg: adImg),
+
+                    ///4.店长电话
+                    LeaderView(leaderUrl: leaderUrl, leaderPhone: leaderPhone,),
+
+                    ///5.商品推荐
+                    RecommendView(recommendList: recommendList),
+                    ///6.楼层区域
+
+                    ///7.火爆专区
+
+                  ],
+                ),
               );
             } else {
               return Center(
