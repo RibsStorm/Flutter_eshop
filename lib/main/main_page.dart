@@ -15,8 +15,7 @@ class MainPage extends StatefulWidget {
   _MainPageState createState() => _MainPageState();
 }
 
-class _MainPageState extends State<MainPage>
-    with AutomaticKeepAliveClientMixin {
+class _MainPageState extends State<MainPage> with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
 
@@ -29,7 +28,7 @@ class _MainPageState extends State<MainPage>
       body: FutureBuilder(
 
           ///future传入对应的耗时请求即可.
-          future: getMainPageContent(),
+          future: postRequest('homePageContext', {'lon': '115.02932', 'lat': '35.76189'}),
           builder: (context, snapshot) {
             ///hasData用于判断当前返回response是否有值
             if (snapshot.hasData) {
@@ -71,15 +70,36 @@ class _MainPageState extends State<MainPage>
                     RecommendShow(data: data),
 
                     ///7.火爆专区
+                    HotGoods(),
                   ],
                 ),
               );
             } else {
               return Center(
-                child: Text("23333"),
+                child: Text("接口请求异常,请重试"),
               );
             }
           }),
     );
+  }
+}
+
+class HotGoods extends StatefulWidget {
+  @override
+  _HotGoodsState createState() => _HotGoodsState();
+}
+
+class _HotGoodsState extends State<HotGoods> {
+  @override
+  void initState() {
+    super.initState();
+    postRequest('hotGoodsList', 1).then((data) {
+      print(data.toString());
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }
