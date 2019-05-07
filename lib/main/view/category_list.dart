@@ -10,7 +10,7 @@ class MainCategoryLit extends StatelessWidget {
   Widget categoryItem(BuildContext context, item) {
     return InkWell(
       onTap: () {
-        print('还没写好');
+        //TODO...通过商品ID跳转 待添加!
       },
       child: Column(
         children: <Widget>[
@@ -36,6 +36,7 @@ class MainCategoryLit extends StatelessWidget {
       height: ScreenUtil().setHeight(350),
       padding: EdgeInsets.all(4.0),
       child: GridView.count(
+        physics: NeverScrollableScrollPhysics(),
         crossAxisCount: 5,
         padding: EdgeInsets.all(4.0),
         children: categoryList.map((item) {

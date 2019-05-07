@@ -9,7 +9,7 @@ class RecommendView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: ScreenUtil().setHeight(380),
+      height: ScreenUtil().setHeight(430),
       margin: EdgeInsets.only(top: 12.0),
       child: Column(
         children: <Widget>[
@@ -23,6 +23,7 @@ class RecommendView extends StatelessWidget {
   ///标题
   Widget _title() {
     return Container(
+      height: ScreenUtil().setHeight(60),
       alignment: Alignment.centerLeft,
       padding: EdgeInsets.only(left: 10.0),
       //底部下划线
@@ -40,18 +41,26 @@ class RecommendView extends StatelessWidget {
   ///推荐商品
   Widget _recommend(index) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        //TODO...通过商品ID跳转 待添加!
+      },
       child: Container(
         width: ScreenUtil().setWidth(250),
-        height: ScreenUtil().setHeight(330),
         padding: EdgeInsets.all(8.0),
         decoration: BoxDecoration(
           color: Colors.white,
-          border: Border(left: BorderSide(width: 1.0, color: Colors.grey)),
+          border: Border(
+            left: BorderSide(width: 1.0, color: Colors.grey),
+            bottom: BorderSide(width: 1.0, color: Colors.grey),
+          ),
         ),
         child: Column(
           children: <Widget>[
-            Image.network(recommendList[index]['image']),
+            Image.network(
+              recommendList[index]['image'],
+              width: ScreenUtil().setWidth(250.0),
+              height: ScreenUtil().setHeight(250.0),
+            ),
             Text(
               '¥${recommendList[index]['mallPrice']}',
               style: TextStyle(color: Colors.redAccent, fontSize: 12.0),
@@ -72,7 +81,7 @@ class RecommendView extends StatelessWidget {
   ///推荐商品列表
   Widget _recommendList(BuildContext context) {
     return Container(
-      height: ScreenUtil().setHeight(330),
+      height: ScreenUtil().setHeight(370),
       child: ListView.builder(
           scrollDirection: Axis.horizontal,
           itemCount: recommendList.length,

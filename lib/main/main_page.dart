@@ -6,15 +6,20 @@ import '../http/service_main.dart';
 import 'view/ad_banner_view.dart';
 import 'view/category_list.dart';
 import 'view/leader_view.dart';
-import 'view/swiper_view.dart';
 import 'view/recommend_view.dart';
+import 'view/show_recommend_view.dart';
+import 'view/swiper_view.dart';
 
 class MainPage extends StatefulWidget {
   @override
   _MainPageState createState() => _MainPageState();
 }
 
-class _MainPageState extends State<MainPage> {
+class _MainPageState extends State<MainPage>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,13 +34,17 @@ class _MainPageState extends State<MainPage> {
             ///hasData用于判断当前返回response是否有值
             if (snapshot.hasData) {
               var data = json.decode(snapshot.data.toString())['data'];
+              //轮播图数据源
               List<Map> swiper = (data['slides'] as List).cast();
+              //gridview 商品列表数据源
               List<Map> categoryList = (data['category'] as List).cast();
+              //tips条数据源
               String adImg = data['advertesPicture']['PICTURE_ADDRESS'];
+              //店长部分数据源
               String leaderUrl = data['shopInfo']['leaderImage'];
               String leaderPhone = data['shopInfo']['leaderPhone'];
+              //商品推荐数据源
               List<Map> recommendList = (data['recommend'] as List).cast();
-
 
               return SingleChildScrollView(
                 child: Column(
@@ -50,14 +59,18 @@ class _MainPageState extends State<MainPage> {
                     ADBanner(adBannerImg: adImg),
 
                     ///4.店长电话
-                    LeaderView(leaderUrl: leaderUrl, leaderPhone: leaderPhone,),
+                    LeaderView(
+                      leaderUrl: leaderUrl,
+                      leaderPhone: leaderPhone,
+                    ),
 
                     ///5.商品推荐
                     RecommendView(recommendList: recommendList),
+
                     ///6.楼层区域
+                    RecommendShow(data: data),
 
                     ///7.火爆专区
-
                   ],
                 ),
               );
