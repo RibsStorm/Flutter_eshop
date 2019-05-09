@@ -1,10 +1,13 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import '../http/service_main.dart';
 import 'view/ad_banner_view.dart';
 import 'view/category_list.dart';
+import 'view/hot_goods_view.dart';
 import 'view/leader_view.dart';
 import 'view/recommend_view.dart';
 import 'view/show_recommend_view.dart';
@@ -15,7 +18,13 @@ class MainPage extends StatefulWidget {
   _MainPageState createState() => _MainPageState();
 }
 
-class _MainPageState extends State<MainPage> with AutomaticKeepAliveClientMixin {
+class _MainPageState extends State<MainPage>
+    with AutomaticKeepAliveClientMixin {
+  int pageIndex = 1;
+  List<Map> hotGoods = [];
+
+  GlobalKey<RefreshFooterState> footerState = GlobalKey();
+
   @override
   bool get wantKeepAlive => true;
 
@@ -27,11 +36,13 @@ class _MainPageState extends State<MainPage> with AutomaticKeepAliveClientMixin 
       ),
       body: FutureBuilder(
 
-          ///future传入对应的耗时请求即可.
-          future: postRequest('homePageContext', {'lon': '115.02932', 'lat': '35.76189'}),
+          //future传入对应的耗时请求即可.
+          future: postRequest('homePageContext',
+              data: {'lon': '115.02932', 'lat': '35.76189'}),
           builder: (context, snapshot) {
-            ///hasData用于判断当前返回response是否有值
+            //hasData用于判断当前返回response是否有值
             if (snapshot.hasData) {
+              print(snapshot.data.toString());
               var data = json.decode(snapshot.data.toString())['data'];
               //轮播图数据源
               List<Map> swiper = (data['slides'] as List).cast();
@@ -45,8 +56,33 @@ class _MainPageState extends State<MainPage> with AutomaticKeepAliveClientMixin 
               //商品推荐数据源
               List<Map> recommendList = (data['recommend'] as List).cast();
 
-              return SingleChildScrollView(
-                child: Column(
+              return EasyRefresh(
+                //自定义底部加载栏
+                refreshFooter: ClassicsFooter(
+                  key: footerState,
+                  bgColor: Colors.white,
+                  textColor: Colors.blueAccent,
+                  moreInfoColor: Colors.blueAccent,
+                  showMore: true,
+                  noMoreText: '',
+                  moreInfo: '...加载中...',
+                  loadReadyText: '上拉即可加载',
+                ),
+
+                //上拉加载更多逻辑
+                loadMore: () async {
+                  await postRequest('hotGoodsList', data: {'page': pageIndex})
+                      .then((result) {
+                    var data = json.decode(result);
+                    List<Map> goods = (data['data'] as List).cast();
+                    setState(() {
+                      hotGoods.addAll(goods);
+                      pageIndex++;
+                    });
+                  });
+                },
+
+                child: ListView(
                   children: <Widget>[
                     ///1.轮播图
                     SwiperView(swiperList: swiper),
@@ -70,36 +106,18 @@ class _MainPageState extends State<MainPage> with AutomaticKeepAliveClientMixin 
                     RecommendShow(data: data),
 
                     ///7.火爆专区
-                    HotGoods(),
+                    HotGoodsList(hotgoods: hotGoods),
                   ],
                 ),
               );
             } else {
               return Center(
-                child: Text("接口请求异常,请重试"),
+                child: SpinKitDoubleBounce(
+                  color: Colors.blueAccent,
+                ),
               );
             }
           }),
     );
-  }
-}
-
-class HotGoods extends StatefulWidget {
-  @override
-  _HotGoodsState createState() => _HotGoodsState();
-}
-
-class _HotGoodsState extends State<HotGoods> {
-  @override
-  void initState() {
-    super.initState();
-    postRequest('hotGoodsList', 1).then((data) {
-      print(data.toString());
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container();
   }
 }

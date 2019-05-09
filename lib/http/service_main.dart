@@ -6,7 +6,7 @@ import 'package:dio/dio.dart';
 import '../const/my_api.dart';
 
 ///获取首页主题内容
-Future postRequest(type, data) async {
+Future postRequest(type, {data}) async {
   try {
     Response response;
     Dio dio = Dio();
@@ -33,6 +33,7 @@ Future postRequest(type, data) async {
 //  try {
 //    int currentPage = 1;
 //    List<Response> response;
+//    List result = [];
 //    Dio dio = Dio();
 //    dio.options.contentType =
 //        ContentType.parse('application/x-www-form-urlencoded');
@@ -44,7 +45,7 @@ Future postRequest(type, data) async {
 //    ]);
 //
 //    if (response[0].statusCode == 200 && response[1].statusCode == 200) {
-//      return response.map((response) => [response.data]);
+//      return response.map((response) => result.add(response.data));
 //    } else {
 //      throw Exception('接口请求异常');
 //    }
