@@ -42,7 +42,6 @@ class _MainPageState extends State<MainPage>
           builder: (context, snapshot) {
             //hasData用于判断当前返回response是否有值
             if (snapshot.hasData) {
-              print(snapshot.data.toString());
               var data = json.decode(snapshot.data.toString())['data'];
               //轮播图数据源
               List<Map> swiper = (data['slides'] as List).cast();

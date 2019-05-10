@@ -22,17 +22,19 @@ dependencies:
 
   cupertino_icons: ^0.1.2
   # 网络请求转菊花控件
-  flutter_spinkit: "^3.1.0"
+  flutter_spinkit: ^3.1.0
   # 网络请求框架
-  dio: 2.1.2
+  dio: ^2.1.2
   # 首页轮播图
-  flutter_swiper: 1.1.6
+  flutter_swiper: ^1.1.6
   # 屏幕适配
   flutter_screenutil: ^0.5.2
   # flutter调用Android/IOS 系统组件(如电话,邮件,短信等)
   url_launcher: ^5.0.2
   # 下拉刷新,上来加载更多
   flutter_easyrefresh: ^1.2.7
+  # Google出品的 状态管理 Provide
+  provide: ^1.0.2
 
 dev_dependencies:
   flutter_test:
