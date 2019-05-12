@@ -1,12 +1,12 @@
-import 'package:flutter/material.dart';
-
 import 'dart:convert';
+
+import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:provide/provide.dart';
 
 import '../http/service_main.dart';
 import 'model/category.dart';
 import 'view/category_navigation_view.dart';
+import 'view/top_navigation_view.dart';
 
 class CategoryPage extends StatefulWidget {
   @override
@@ -30,7 +30,16 @@ class _CategoryPageState extends State<CategoryPage> {
               return Container(
                 child: Row(
                   children: <Widget>[
+                    //左侧--导航栏
                     CategoryNavigation(list: listModel.data),
+
+                    Column(
+                      children: <Widget>[
+                        //右侧--顶部文字栏
+                        TopNavigation(),
+                        //右侧--商品内容展示栏
+                      ],
+                    ),
                   ],
                 ),
               );

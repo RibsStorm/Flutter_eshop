@@ -1,7 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_eshop/app_page.dart';
+import 'package:provide/provide.dart';
 
-void main() => runApp(MyAPP());
+import 'app_page.dart';
+import 'category/provide/category_provide.dart';
+
+void main() {
+  //使用Google Provide对数据进行管理
+  var categoryProvide = CategoryProvide();
+
+  var provides = Providers();
+  provides..provide(Provider<CategoryProvide>.value(categoryProvide));
+  runApp(ProviderNode(child: MyAPP(), providers: provides));
+}
 
 class MyAPP extends StatelessWidget {
   @override
@@ -10,9 +20,7 @@ class MyAPP extends StatelessWidget {
     return Container(
       child: MaterialApp(
         title: '百姓生活+',
-        theme: ThemeData(
-          primaryColor: Colors.lightBlueAccent
-        ),
+        theme: ThemeData(primaryColor: Colors.lightBlueAccent),
         debugShowCheckedModeBanner: false,
         home: AppPage(),
       ),
