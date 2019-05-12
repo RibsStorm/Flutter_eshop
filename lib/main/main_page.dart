@@ -5,6 +5,8 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import '../http/service_main.dart';
+import 'model/hotgoods.dart';
+import 'model/mainpage_content.dart';
 import 'view/ad_banner_view.dart';
 import 'view/category_list.dart';
 import 'view/hot_goods_view.dart';
@@ -21,7 +23,7 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage>
     with AutomaticKeepAliveClientMixin {
   int pageIndex = 1;
-  List<Map> hotGoods = [];
+  List<HotGoods> hotGoods = [];
 
   GlobalKey<RefreshFooterState> footerState = GlobalKey();
 
@@ -42,18 +44,9 @@ class _MainPageState extends State<MainPage>
           builder: (context, snapshot) {
             //hasData用于判断当前返回response是否有值
             if (snapshot.hasData) {
-              var data = json.decode(snapshot.data.toString())['data'];
-              //轮播图数据源
-              List<Map> swiper = (data['slides'] as List).cast();
-              //gridview 商品列表数据源
-              List<Map> categoryList = (data['category'] as List).cast();
-              //tips条数据源
-              String adImg = data['advertesPicture']['PICTURE_ADDRESS'];
-              //店长部分数据源
-              String leaderUrl = data['shopInfo']['leaderImage'];
-              String leaderPhone = data['shopInfo']['leaderPhone'];
-              //商品推荐数据源
-              List<Map> recommendList = (data['recommend'] as List).cast();
+              var data = json.decode(snapshot.data.toString());
+              MainPageContent content =
+                  MainPageContentModel.fromJson(data).data;
 
               return EasyRefresh(
                 //自定义底部加载栏
@@ -73,7 +66,7 @@ class _MainPageState extends State<MainPage>
                   await postRequest('hotGoodsList', data: {'page': pageIndex})
                       .then((result) {
                     var data = json.decode(result);
-                    List<Map> goods = (data['data'] as List).cast();
+                    List<HotGoods> goods = HotGoodsModel.fromJson(data).data;
                     setState(() {
                       hotGoods.addAll(goods);
                       pageIndex++;
@@ -84,25 +77,26 @@ class _MainPageState extends State<MainPage>
                 child: ListView(
                   children: <Widget>[
                     ///1.轮播图
-                    SwiperView(swiperList: swiper),
+                    SwiperView(swiperList: content.slides),
 
                     ///2.gridview 商品列表
-                    MainCategoryLit(categoryList: categoryList),
+                    MainCategoryLit(categoryList: content.category),
 
                     ///3.小的宣传栏
-                    ADBanner(adBannerImg: adImg),
+                    ADBanner(
+                        adBannerImg: content.advertesPicture.pICTUREADDRESS),
 
                     ///4.店长电话
                     LeaderView(
-                      leaderUrl: leaderUrl,
-                      leaderPhone: leaderPhone,
+                      leaderUrl: content.shopInfo.leaderImage,
+                      leaderPhone: content.shopInfo.leaderPhone,
                     ),
 
                     ///5.商品推荐
-                    RecommendView(recommendList: recommendList),
+                    RecommendView(recommendList: content.recommend),
 
                     ///6.楼层区域
-                    RecommendShow(data: data),
+                    RecommendShow(content: content),
 
                     ///7.火爆专区
                     HotGoodsList(hotgoods: hotGoods),

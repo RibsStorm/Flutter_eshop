@@ -13,7 +13,7 @@ class LeaderView extends StatelessWidget {
     return InkWell(
       onTap: _callPhone,
       child: Container(
-        height: ScreenUtil().setHeight(239),
+        height: ScreenUtil().setHeight(200),
         child: Image.network(leaderUrl),
       ),
     );

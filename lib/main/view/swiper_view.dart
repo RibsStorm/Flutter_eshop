@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
+import '../model/mainpage_content.dart';
+
 ///轮播图组件
 class SwiperView extends StatelessWidget {
-  List swiperList = [];
+  List<Slides> swiperList = [];
 
-  SwiperView({Key key,this.swiperList}):super(key:key);
+  SwiperView({Key key, this.swiperList}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +19,7 @@ class SwiperView extends StatelessWidget {
         itemCount: swiperList.length,
         itemBuilder: (context, index) {
           return Image.network(
-            "${swiperList[index]["image"]}",
+            "${swiperList.elementAt(index).image}",
             fit: BoxFit.fill,
           );
         },

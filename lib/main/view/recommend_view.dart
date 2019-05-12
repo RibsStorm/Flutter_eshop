@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../model/mainpage_content.dart';
+
 class RecommendView extends StatelessWidget {
-  final List recommendList;
+  final List<Recommend> recommendList;
 
   RecommendView({Key key, this.recommendList}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: ScreenUtil().setHeight(430),
-      margin: EdgeInsets.only(top: 12.0),
+      height: ScreenUtil().setHeight(390),
+//      margin: EdgeInsets.only(top: 12.0),
       child: Column(
         children: <Widget>[
           _title(),
@@ -46,7 +48,8 @@ class RecommendView extends StatelessWidget {
       },
       child: Container(
         width: ScreenUtil().setWidth(250),
-        padding: EdgeInsets.all(8.0),
+        height: ScreenUtil().setHeight(350),
+        padding: EdgeInsets.all(4.0),
         decoration: BoxDecoration(
           color: Colors.white,
           border: Border(
@@ -57,16 +60,16 @@ class RecommendView extends StatelessWidget {
         child: Column(
           children: <Widget>[
             Image.network(
-              recommendList[index]['image'],
+              recommendList.elementAt(index).image,
               width: ScreenUtil().setWidth(250.0),
               height: ScreenUtil().setHeight(250.0),
             ),
             Text(
-              '¥${recommendList[index]['mallPrice']}',
+              '¥${recommendList.elementAt(index).mallPrice}',
               style: TextStyle(color: Colors.redAccent, fontSize: 12.0),
             ),
             Text(
-              '¥${recommendList[index]['price']}',
+              '¥${recommendList.elementAt(index).price}',
               style: TextStyle(
                   decoration: TextDecoration.lineThrough,
                   color: Colors.grey,
@@ -81,7 +84,7 @@ class RecommendView extends StatelessWidget {
   ///推荐商品列表
   Widget _recommendList(BuildContext context) {
     return Container(
-      height: ScreenUtil().setHeight(370),
+      height: ScreenUtil().setHeight(330),
       child: ListView.builder(
           scrollDirection: Axis.horizontal,
           itemCount: recommendList.length,

@@ -7,6 +7,8 @@ class ADBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image.network(adBannerImg);
+    return Image.network(
+      adBannerImg,
+    );
   }
 }

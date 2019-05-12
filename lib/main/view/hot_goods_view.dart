@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../model/hotgoods.dart';
+
 class HotGoodsList extends StatelessWidget {
-  final List<Map> hotgoods;
+  final List<HotGoods> hotgoods;
   List<Widget> goods;
 
   HotGoodsList({Key key, this.hotgoods});
@@ -10,7 +12,6 @@ class HotGoodsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-//      height: ScreenUtil().setHeight(3800),
       child: Column(
         children: <Widget>[
           hotTitle(),
@@ -39,18 +40,18 @@ class HotGoodsList extends StatelessWidget {
             //TODO...通过商品ID跳转 待添加!
           },
           child: Container(
-            height: ScreenUtil().setHeight(475),
+            height: ScreenUtil().setHeight(360),
             width: ScreenUtil().setWidth(365),
             padding: EdgeInsets.all(4.0),
             child: Column(
               children: <Widget>[
                 Image.network(
-                  data['image'],
+                  data.image,
                   fit: BoxFit.fill,
                 ),
                 Center(
                   child: Text(
-                    data['name'],
+                    data.name,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
@@ -63,7 +64,7 @@ class HotGoodsList extends StatelessWidget {
                     Container(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        '¥${data['mallPrice']}',
+                        '¥${data.mallPrice}',
                         style: TextStyle(fontSize: 11.0),
                       ),
                     ),
@@ -71,7 +72,7 @@ class HotGoodsList extends StatelessWidget {
                       width: ScreenUtil().setWidth(180),
                       alignment: Alignment.centerRight,
                       child: Text(
-                        '¥${data['price']}',
+                        '¥${data.price}',
                         style: TextStyle(
                           fontSize: 11.0,
                           color: Colors.grey,

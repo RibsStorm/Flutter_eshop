@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class RecommendShow extends StatelessWidget {
-  var data;
+import '../model/mainpage_content.dart';
 
-  RecommendShow({Key key, this.data});
+class RecommendShow extends StatelessWidget {
+  final MainPageContent content;
+
+  RecommendShow({Key key, this.content});
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: ScreenUtil().setHeight(2535.0),
+      height: ScreenUtil().setHeight(1925.0),
       child: ListView.builder(
           physics: NeverScrollableScrollPhysics(),
           itemCount: 3,
@@ -18,12 +20,27 @@ class RecommendShow extends StatelessWidget {
   }
 
   Widget showRecommendItem(index) {
+    String floorPic;
+    switch (index) {
+      case 0:
+        floorPic = content.floor1Pic.pICTUREADDRESS;
+        break;
+      case 1:
+        floorPic = content.floor2Pic.pICTUREADDRESS;
+        break;
+      case 2:
+        floorPic = content.floor3Pic.pICTUREADDRESS;
+        break;
+      default:
+        break;
+    }
+
     return Container(
       child: Column(
         children: <Widget>[
           Container(
-            padding: EdgeInsets.all(4.0),
-            child: item(data['floor${index + 1}Pic']['PICTURE_ADDRESS']),
+            padding: EdgeInsets.all(2.0),
+            child: item(floorPic),
           ),
           recommendItem(index),
         ],
@@ -32,6 +49,21 @@ class RecommendShow extends StatelessWidget {
   }
 
   Widget recommendItem(index) {
+    List<dynamic> floor;
+    switch (index) {
+      case 0:
+        floor = content.floor1;
+        break;
+      case 1:
+        floor = content.floor2;
+        break;
+      case 2:
+        floor = content.floor3;
+        break;
+      default:
+        break;
+    }
+
     return Row(
       children: <Widget>[
         Container(
@@ -39,10 +71,10 @@ class RecommendShow extends StatelessWidget {
           child: Column(
             children: <Widget>[
               item(
-                data['floor${index + 1}'][0]['image'],
+                floor.elementAt(0).image,
               ),
               item(
-                data['floor${index + 1}'][1]['image'],
+                floor.elementAt(1).image,
               ),
             ],
           ),
@@ -52,13 +84,13 @@ class RecommendShow extends StatelessWidget {
           child: Column(
             children: <Widget>[
               item(
-                data['floor${index + 1}'][2]['image'],
+                floor.elementAt(2).image,
               ),
               item(
-                data['floor${index + 1}'][3]['image'],
+                floor.elementAt(3).image,
               ),
               item(
-                data['floor${index + 1}'][4]['image'],
+                floor.elementAt(4).image,
               ),
             ],
           ),

@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../model/mainpage_content.dart';
+
 ///首页商品分类展示列表
 class MainCategoryLit extends StatelessWidget {
-  List categoryList = [];
+  List<Category> categoryList = [];
 
-  MainCategoryLit({Key key,this.categoryList}):super(key:key);
+  MainCategoryLit({Key key, this.categoryList}) : super(key: key);
 
-  Widget categoryItem(BuildContext context, item) {
+  Widget categoryItem(BuildContext context, Category item) {
     return InkWell(
       onTap: () {
         //TODO...通过商品ID跳转 待添加!
@@ -15,11 +17,17 @@ class MainCategoryLit extends StatelessWidget {
       child: Column(
         children: <Widget>[
           Image.network(
-            item['image'],
-            width: ScreenUtil().setWidth(93),
-            height: ScreenUtil().setHeight(93),
+            item.image,
+            width: ScreenUtil().setWidth(90),
+            height: ScreenUtil().setHeight(90),
           ),
-          Text(item['mallCategoryName']),
+          SizedBox(
+            height: ScreenUtil().setHeight(24),
+            child: Text(
+              item.mallCategoryName,
+              style: TextStyle(fontSize: ScreenUtil().setSp(26)),
+            ),
+          ),
         ],
       ),
     );
@@ -33,12 +41,12 @@ class MainCategoryLit extends StatelessWidget {
     }
 
     return Container(
-      height: ScreenUtil().setHeight(350),
+      height: ScreenUtil().setHeight(260),
       padding: EdgeInsets.all(4.0),
       child: GridView.count(
         physics: NeverScrollableScrollPhysics(),
         crossAxisCount: 5,
-        padding: EdgeInsets.all(4.0),
+        padding: EdgeInsets.all(6.0),
         children: categoryList.map((item) {
           return categoryItem(context, item);
         }).toList(),
