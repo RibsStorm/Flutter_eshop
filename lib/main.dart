@@ -9,7 +9,8 @@ void main() {
   var categoryProvide = CategoryProvide();
 
   var provides = Providers();
-  provides..provide(Provider<CategoryProvide>.value(categoryProvide));
+  provides
+    ..provide(Provider<CategoryProvide>.value(categoryProvide));
   runApp(ProviderNode(child: MyAPP(), providers: provides));
 }
 

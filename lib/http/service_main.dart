@@ -27,9 +27,9 @@ Future postRequest(type, {data}) async {
   }
 }
 
-////想把首页的2个接口通过dio整合成一个,
-////map处理有点问题,应该是我姿势不对
-//Future getMainPage() async {
+//想把首页的2个接口通过dio整合成一个,
+//map处理有点问题,应该是我姿势不对
+//Future postRequestForMore() async {
 //  try {
 //    int currentPage = 1;
 //    List<Response> response;

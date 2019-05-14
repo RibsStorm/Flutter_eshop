@@ -10,11 +10,11 @@ class TopNavigation extends StatelessWidget {
     //最外层需要Provide包裹,传递3个参数,第3个参数为 with ChangeNotifier的类
     return Provide<CategoryProvide>(builder: (context, child, list) {
       return Container(
-        width: ScreenUtil().setWidth(530),
+        width: ScreenUtil().setWidth(550),
         height: ScreenUtil().setHeight(80),
         decoration: BoxDecoration(
-            color: Colors.white,
-            border: Border(bottom: BorderSide(color: Colors.grey, width: 1.0))),
+          color: Colors.white,
+        ),
         child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: list.items.length,
@@ -27,8 +27,17 @@ class TopNavigation extends StatelessWidget {
   Widget goodsNavigation(name) {
     return Container(
       alignment: Alignment.centerLeft,
-      padding: EdgeInsets.only(left: 12.0, right: 6.0),
-      child: Text(name),
+      padding: EdgeInsets.only(left: 10.0, right: 4.0),
+      child: Card(
+        color: Colors.lightBlueAccent,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(4.0))),
+        clipBehavior: Clip.antiAlias,
+        child: Padding(
+          padding: EdgeInsets.all(2.0),
+          child: Text(name),
+        ),
+      ),
     );
   }
 }

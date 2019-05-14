@@ -37,7 +37,6 @@ class _MainPageState extends State<MainPage>
         title: Text('这是首页'),
       ),
       body: FutureBuilder(
-
           //future传入对应的耗时请求即可.
           future: postRequest('homePageContext',
               data: {'lon': '115.02932', 'lat': '35.76189'}),

@@ -1836,3 +1836,171 @@ final String categroyData = "${{
     }
   ]
 }}";
+
+//商品分类 商品列表接口数据
+final String categoryGoodsData = "${{
+  "code": "0",
+  "message": "success",
+  "data": [
+    {
+      "image":
+          "http://images.baixingliangfan.cn/compressedPic/20190118101813_9360.jpg",
+      "oriPrice": 3.30,
+      "presentPrice": 3.00,
+      "goodsName": "京宫二锅头56°100ml",
+      "goodsId": "035b55e444db4d308fd963543c7d884f"
+    },
+    {
+      "image":
+          "http://images.baixingliangfan.cn/compressedPic/20190128183933_79.jpg",
+      "oriPrice": 9.90,
+      "presentPrice": 9.90,
+      "goodsName": "陈酿原浆酒52°500ml",
+      "goodsId": "6a848f6247354455b4fa0f4a48e2ac4a"
+    },
+    {
+      "image":
+          "http://images.baixingliangfan.cn/compressedPic/20190118135614_8609.jpg",
+      "oriPrice": 10.89,
+      "presentPrice": 9.90,
+      "goodsName": "鹿邑大曲46°450ml（精制）",
+      "goodsId": "6abf2a6236de4a489933f91c071cbd3b"
+    },
+    {
+      "image":
+          "http://images.baixingliangfan.cn/compressedPic/20190120085431_3319.jpg",
+      "oriPrice": 11.00,
+      "presentPrice": 10.00,
+      "goodsName": "中粮白酒浓香42°250ml",
+      "goodsId": "704a87591bcf440ab70bbfedf5e9de8e"
+    },
+    {
+      "image":
+          "http://images.baixingliangfan.cn/compressedPic/20190119142821_6362.jpg",
+      "oriPrice": 11.00,
+      "presentPrice": 10.00,
+      "goodsName": "五粮液绵柔尖庄浓香型42度125ml",
+      "goodsId": "71df9ea6dd674ac1aa0aee1e803be516"
+    },
+    {
+      "image":
+          "http://images.baixingliangfan.cn/compressedPic/20190118091441_2622.jpg",
+      "oriPrice": 13.20,
+      "presentPrice": 12.00,
+      "goodsName": "红星二锅头绵柔46度450ml",
+      "goodsId": "4b7982acbaa4464e92a3f564dd676408"
+    },
+    {
+      "image":
+          "http://images.baixingliangfan.cn/compressedPic/20180712114647_2085.jpg",
+      "oriPrice": 15.00,
+      "presentPrice": 12.90,
+      "goodsName": "牛栏山陈酿42°500ml",
+      "goodsId": "558f4c09ef434166b8e36521668c1ef7"
+    },
+    {
+      "image":
+          "http://images.baixingliangfan.cn/compressedPic/20190118091934_9883.jpg",
+      "oriPrice": 16.50,
+      "presentPrice": 15.00,
+      "goodsName": "红星牌红星二锅头酒52°500ml",
+      "goodsId": "0f7bf8362dcf419c9ca53f5c3eb631e7"
+    },
+    {
+      "image":
+          "http://images.baixingliangfan.cn/compressedPic/20190117164210_7361.png",
+      "oriPrice": 16.50,
+      "presentPrice": 15.00,
+      "goodsName": "古井粮液45°500ml",
+      "goodsId": "61cb3d703b8f4c468fd887fb80d35a6b"
+    },
+    {
+      "image":
+          "http://images.baixingliangfan.cn/compressedPic/20190117154329_2571.jpg",
+      "oriPrice": 16.50,
+      "presentPrice": 15.00,
+      "goodsName": "枫林纯谷酒50°500ml",
+      "goodsId": "e207ddba39a5401992a3491b58972fbc"
+    },
+    {
+      "image":
+          "http://images.baixingliangfan.cn/compressedPic/20181210142703_5845.jpg",
+      "oriPrice": 20.00,
+      "presentPrice": 15.90,
+      "goodsName": "小郎酒45°100ml",
+      "goodsId": "54c0a3a0ded649abad6dca9bbb6ae571"
+    },
+    {
+      "image":
+          "http://images.baixingliangfan.cn/compressedPic/20190119102233_5816.jpg",
+      "oriPrice": 17.60,
+      "presentPrice": 16.00,
+      "goodsName": "沱牌93#酒42°125ml",
+      "goodsId": "ae8fd4cd7df04c0196128f02ecdf15b7"
+    },
+    {
+      "image":
+          "http://images.baixingliangfan.cn/compressedPic/20190119094430_6477.jpg",
+      "oriPrice": 18.59,
+      "presentPrice": 16.90,
+      "goodsName": "双沟大曲53°500ml",
+      "goodsId": "349869cfde004c82bd575128444e8c0f"
+    },
+    {
+      "image":
+          "http://images.baixingliangfan.cn/compressedPic/20181229215619_8065.jpg",
+      "oriPrice": 18.59,
+      "presentPrice": 16.90,
+      "goodsName": "江小白单纯高粱酒40°100ml",
+      "goodsId": "590bc5835b9a47c28131e8f116f92361"
+    },
+    {
+      "image":
+          "http://images.baixingliangfan.cn/compressedPic/20180712115230_8145.jpg",
+      "oriPrice": 20.00,
+      "presentPrice": 18.00,
+      "goodsName": "泸州老窖二曲浓香型52° 500ml",
+      "goodsId": "27a976cd5cb843928bfaebe0b98d683f"
+    },
+    {
+      "image":
+          "http://images.baixingliangfan.cn/compressedPic/20190120091429_2128.jpg",
+      "oriPrice": 19.80,
+      "presentPrice": 18.00,
+      "goodsName": "中粮白酒浓香42°500ml",
+      "goodsId": "3c4a57315c7543e4a26bba93f366a06d"
+    },
+    {
+      "image":
+          "http://images.baixingliangfan.cn/compressedPic/20190116172137_4333.jpg",
+      "oriPrice": 29.00,
+      "presentPrice": 18.00,
+      "goodsName": "宝丰大曲酒50°500ml",
+      "goodsId": "6fbd9b0d7be34dd7ae9eb33a4264f4e1"
+    },
+    {
+      "image":
+          "http://images.baixingliangfan.cn/compressedPic/20190117115141_7791.jpg",
+      "oriPrice": 19.80,
+      "presentPrice": 18.00,
+      "goodsName": "北京二锅头（小方瓶清香）42°200ml",
+      "goodsId": "784d4c5adb594f9d8b321559b42ece7b"
+    },
+    {
+      "image":
+          "http://images.baixingliangfan.cn/compressedPic/20190120091707_4157.jpg",
+      "oriPrice": 19.80,
+      "presentPrice": 18.00,
+      "goodsName": "竹叶青酒38°150ml",
+      "goodsId": "96c9e390a10941fc8b4c2dd68eb4ff8e"
+    },
+    {
+      "image":
+          "http://images.baixingliangfan.cn/compressedPic/20190119151346_5065.jpg",
+      "oriPrice": 19.80,
+      "presentPrice": 18.00,
+      "goodsName": "五粮液歪嘴52°100ml",
+      "goodsId": "a082f2a4036744ecb6475b4d373f0e3d"
+    }
+  ]
+}}";
