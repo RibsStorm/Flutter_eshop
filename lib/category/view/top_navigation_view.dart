@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provide/provide.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../http/service_main.dart';
 import '../model/category_goods.dart';
@@ -53,8 +54,9 @@ class _TopNavigationState extends State<TopNavigation> {
       onTap: () {
         setState(() {
           //在一个一级列表内,每次点击,获取点击的位置,刷新UI
-            selectIndex = currentIndex;
+          selectIndex = currentIndex;
         });
+
         getCategoryGoodsList(categoryId, categorySubId);
       },
       child: Container(
@@ -81,15 +83,23 @@ class _TopNavigationState extends State<TopNavigation> {
     await postRequest('categoryDetailList', data: {
       'categoryId': '$categoryId',
       'categorySubId': '$categorySubId',
-      'page': '1'
+      'page': '1',
     }).then((response) {
       var data = json.decode(response.toString());
       List<CategoryGoods> list = CategoryGoodsListModel.fromJson(data).data;
 
-      if (list.isNotEmpty) {
+      if (list != null && list.isNotEmpty) {
         Provide.value<CategoryProvide>(context).getCategoryGoodsList(list);
-      }else{
-        Provide.value<CategoryProvide>(context).getCategoryGoodsList([]);
+      } else {
+        //没有获取到对应的分类商品数据,进行Toast提示.
+        Fluttertoast.showToast(
+            msg: "~~~木有数据~~~",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIos: 1,
+            backgroundColor: Colors.lightBlueAccent,
+            textColor: Colors.white,
+            fontSize: 16.0);
       }
     });
   }

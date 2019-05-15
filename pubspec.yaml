@@ -35,6 +35,8 @@ dependencies:
   flutter_easyrefresh: ^1.2.7
   # Google出品的 状态管理 Provide
   provide: ^1.0.2
+  # flutter toast
+  fluttertoast: ^3.0.4
 
 dev_dependencies:
   flutter_test:

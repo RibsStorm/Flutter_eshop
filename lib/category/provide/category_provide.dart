@@ -8,12 +8,12 @@ class CategoryProvide with ChangeNotifier {
   List<CategoryGoods> goodsList = [];
 //商品的二级分类,都是都是选中第一个, 全部
   int childIndex = 0;
-//商品的顶部二级分类列表 点击对应的 三级分类ID
-  String categorySubId;
+//二级列表--商品列表的 categoryId
+  String categoryId = '4';
 
-  getCategory(int childIndex,List<CategoryItem> list) {
-    //在数据源前面手动添加一个 全部
-    //默认选中第一个,进行高亮
+  getCategory(int childIndex, List<CategoryItem> list) {
+//在数据源前面手动添加一个 全部
+//默认选中第一个,进行高亮
     this.childIndex = childIndex;
     CategoryItem all = CategoryItem();
     all.mallSubId = "";

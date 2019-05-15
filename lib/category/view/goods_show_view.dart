@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provide/provide.dart';
 
 import '../model/category_goods.dart';
@@ -23,21 +22,11 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
             child: GridView.count(
               crossAxisCount: 2,
               //子widget的 宽高比
-              childAspectRatio: 0.75,
+              childAspectRatio: 0.70,
               padding: EdgeInsets.fromLTRB(4.0, 6.0, 4.0, 6.0),
               children: list.goodsList.map((data) {
                 return GoodsView(data);
               }).toList(),
-            ),
-          ),
-        );
-      } else {
-        return Container(
-          width: ScreenUtil().setWidth(550),
-          height: ScreenUtil().setHeight(1000),
-          child: Center(
-            child: SpinKitDoubleBounce(
-              color: Colors.blueAccent,
             ),
           ),
         );

@@ -45,7 +45,6 @@ class _CategoryNavigationState extends State<CategoryNavigation> {
         Provide.value<CategoryProvide>(context)
             .getCategory(index, widget.list.elementAt(index).bxMallSubDto);
         //点击后,通过provide将关联的item进行传递,请求接口获取商品列表展示
-//        Provide.value<CategoryProvide>(context).getCategoryItem(widget.list.elementAt(index).mallCategoryId);
         getCategoryGoodsList(widget.list.elementAt(index).mallCategoryId);
       },
       child: Container(
