@@ -17,17 +17,18 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
     return Provide<CategoryProvide>(builder: (context, child, list) {
       //通过provide接受传递过来的需要显示的数据源
       if (list.goodsList.isNotEmpty) {
-        return Container(
-          width: ScreenUtil().setWidth(550),
-          height: ScreenUtil().setHeight(1000),
-          child: GridView.count(
-            crossAxisCount: 2,
-            //子widget的 宽高比
-            childAspectRatio: 0.75,
-            padding: EdgeInsets.fromLTRB(4.0, 6.0, 4.0, 6.0),
-            children: list.goodsList.map((data) {
-              return GoodsView(data);
-            }).toList(),
+        return Expanded(
+          child: Container(
+            width: ScreenUtil().setWidth(550),
+            child: GridView.count(
+              crossAxisCount: 2,
+              //子widget的 宽高比
+              childAspectRatio: 0.75,
+              padding: EdgeInsets.fromLTRB(4.0, 6.0, 4.0, 6.0),
+              children: list.goodsList.map((data) {
+                return GoodsView(data);
+              }).toList(),
+            ),
           ),
         );
       } else {

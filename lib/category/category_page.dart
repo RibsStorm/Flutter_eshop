@@ -32,7 +32,7 @@ class _CategoryPageState extends State<CategoryPage> {
               CategoryModel listModel = CategoryModel.fromJson(data);
               //接口获取到,就默认将第一个列表传递到二级分类,防止第一次进来页面报错
               Provide.value<CategoryProvide>(context)
-                  .getCategory(listModel.data.elementAt(0).bxMallSubDto);
+                  .getCategory(0,listModel.data.elementAt(0).bxMallSubDto);
 
               getCategoryGoodsList(listModel.data.elementAt(0).mallCategoryId);
 
@@ -74,7 +74,9 @@ class _CategoryPageState extends State<CategoryPage> {
       var data = json.decode(response.toString());
       List<CategoryGoods> list = CategoryGoodsListModel.fromJson(data).data;
 
-      Provide.value<CategoryProvide>(context).getCategoryGoodsList(list);
+      if (list.isNotEmpty) {
+        Provide.value<CategoryProvide>(context).getCategoryGoodsList(list);
+      }
     });
   }
 

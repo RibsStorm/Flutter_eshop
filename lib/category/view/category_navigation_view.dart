@@ -1,9 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provide/provide.dart';
-import '../../http/service_main.dart';
-import 'dart:convert';
 
+import '../../http/service_main.dart';
 import '../model/category.dart';
 import '../model/category_goods.dart';
 import '../provide/category_provide.dart';
@@ -42,7 +43,7 @@ class _CategoryNavigationState extends State<CategoryNavigation> {
         });
         //点击后,通过provide将关联的list进行传递,传递给二级列表顶部显示
         Provide.value<CategoryProvide>(context)
-            .getCategory(widget.list.elementAt(index).bxMallSubDto);
+            .getCategory(index, widget.list.elementAt(index).bxMallSubDto);
         //点击后,通过provide将关联的item进行传递,请求接口获取商品列表展示
 //        Provide.value<CategoryProvide>(context).getCategoryItem(widget.list.elementAt(index).mallCategoryId);
         getCategoryGoodsList(widget.list.elementAt(index).mallCategoryId);
@@ -74,7 +75,9 @@ class _CategoryNavigationState extends State<CategoryNavigation> {
       var data = json.decode(response.toString());
       List<CategoryGoods> list = CategoryGoodsListModel.fromJson(data).data;
 
-      Provide.value<CategoryProvide>(context).getCategoryGoodsList(list);
+      if (list.isNotEmpty) {
+        Provide.value<CategoryProvide>(context).getCategoryGoodsList(list);
+      }
     });
   }
 }
