@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
+import '../../application.dart';
 import '../model/mainpage_content.dart';
 
 ///轮播图组件
@@ -18,9 +19,15 @@ class SwiperView extends StatelessWidget {
       child: Swiper(
         itemCount: swiperList.length,
         itemBuilder: (context, index) {
-          return Image.network(
-            "${swiperList.elementAt(index).image}",
-            fit: BoxFit.fill,
+          return InkWell(
+            onTap: () {
+              Application.router.navigateTo(
+                  context, '/detail?id=${swiperList.elementAt(index).goodsId}');
+            },
+            child: Image.network(
+              "${swiperList.elementAt(index).image}",
+              fit: BoxFit.fill,
+            ),
           );
         },
         pagination: SwiperPagination(),

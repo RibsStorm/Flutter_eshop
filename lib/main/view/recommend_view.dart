@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../model/mainpage_content.dart';
+import '../../application.dart';
 
 class RecommendView extends StatelessWidget {
   final List<Recommend> recommendList;
@@ -41,10 +42,10 @@ class RecommendView extends StatelessWidget {
   }
 
   ///推荐商品
-  Widget _recommend(index) {
+  Widget _recommend(context,index) {
     return InkWell(
       onTap: () {
-        //TODO...通过商品ID跳转 待添加!
+        Application.router.navigateTo(context, '/detail?id=${recommendList.elementAt(index).goodsId}');
       },
       child: Container(
         width: ScreenUtil().setWidth(250),
@@ -89,7 +90,7 @@ class RecommendView extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           itemCount: recommendList.length,
           itemBuilder: (context, index) {
-            return _recommend(index);
+            return _recommend(context,index);
           }),
     );
   }

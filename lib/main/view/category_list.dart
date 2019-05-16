@@ -4,10 +4,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../model/mainpage_content.dart';
 
 ///首页商品分类展示列表
-class MainCategoryLit extends StatelessWidget {
+class MainCategoryList extends StatelessWidget {
   List<Category> categoryList = [];
 
-  MainCategoryLit({Key key, this.categoryList}) : super(key: key);
+  MainCategoryList({Key key, this.categoryList}) : super(key: key);
 
   Widget categoryItem(BuildContext context, Category item) {
     return InkWell(

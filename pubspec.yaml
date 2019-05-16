@@ -37,6 +37,10 @@ dependencies:
   provide: ^1.0.2
   # flutter toast
   fluttertoast: ^3.0.4
+  # 路由框架
+  fluro: "^1.4.0"
+  # html加载库
+  flutter_html: ^0.9.8
 
 dev_dependencies:
   flutter_test:

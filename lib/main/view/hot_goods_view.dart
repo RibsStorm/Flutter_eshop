@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../model/hotgoods.dart';
+import '../../application.dart';
 
 class HotGoodsList extends StatelessWidget {
   final List<HotGoods> hotgoods;
@@ -15,7 +16,7 @@ class HotGoodsList extends StatelessWidget {
       child: Column(
         children: <Widget>[
           hotTitle(),
-          goodsItem(),
+          goodsItem(context),
         ],
       ),
     );
@@ -32,12 +33,12 @@ class HotGoodsList extends StatelessWidget {
     );
   }
 
-  Widget goodsItem() {
+  Widget goodsItem(context) {
     if (hotgoods.isNotEmpty) {
       goods = hotgoods.map((data) {
         return InkWell(
           onTap: () {
-            //TODO...通过商品ID跳转 待添加!
+            Application.router.navigateTo(context, '/detail?id=${data.goodsId}');
           },
           child: Container(
             height: ScreenUtil().setHeight(360),

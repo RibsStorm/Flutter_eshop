@@ -24,9 +24,9 @@ class _CategoryNavigationState extends State<CategoryNavigation> {
   Widget build(BuildContext context) {
     return Container(
       width: ScreenUtil().setWidth(200),
-      decoration: BoxDecoration(
-        color: Color.fromRGBO(236, 236, 236, 0.5),
-      ),
+//      decoration: BoxDecoration(
+//        color: Color.fromARGB(155,187, 255, 255),
+//      ),
       child: ListView.builder(
           itemCount: widget.list.length,
           itemBuilder: (context, index) => navigationItem(index)),
@@ -50,7 +50,7 @@ class _CategoryNavigationState extends State<CategoryNavigation> {
       child: Container(
         height: ScreenUtil().setHeight(120),
         decoration: BoxDecoration(
-          color: isClick ? Colors.white : Colors.grey,
+          color: isClick ? Colors.white :  Color.fromARGB(200,236, 236, 236),
         ),
         child: Container(
           alignment: Alignment.centerLeft,

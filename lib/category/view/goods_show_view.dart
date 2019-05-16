@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provide/provide.dart';
 
+import '../../application.dart';
 import '../model/category_goods.dart';
 import '../provide/category_provide.dart';
 
@@ -37,7 +38,7 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
   Widget GoodsView(CategoryGoods data) {
     return InkWell(
       onTap: () {
-        //TODO...通过商品ID跳转 待添加!
+        Application.router.navigateTo(context, '/detail?id=${data.goodsId}');
       },
       child: Container(child: goodsItem(data)),
     );
@@ -51,14 +52,17 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
           width: ScreenUtil().setWidth(220),
           height: ScreenUtil().setHeight(220),
         ),
-        Text(
-          data.goodsName,
-          style: TextStyle(
-              fontSize: ScreenUtil().setSp(26),
-              color: Colors.redAccent.shade100),
-          textAlign: TextAlign.center,
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
+        Container(
+          height: ScreenUtil().setHeight(50),
+          child: Text(
+            data.goodsName,
+            style: TextStyle(
+                fontSize: ScreenUtil().setSp(26),
+                color: Colors.redAccent.shade100),
+            textAlign: TextAlign.center,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
         ),
         Row(
           children: <Widget>[

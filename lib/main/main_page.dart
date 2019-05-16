@@ -79,7 +79,7 @@ class _MainPageState extends State<MainPage>
                     SwiperView(swiperList: content.slides),
 
                     ///2.gridview 商品列表
-                    MainCategoryLit(categoryList: content.category),
+                    MainCategoryList(categoryList: content.category),
 
                     ///3.小的宣传栏
                     ADBanner(

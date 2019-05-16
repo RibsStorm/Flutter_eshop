@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../application.dart';
 import '../model/mainpage_content.dart';
 
 class RecommendShow extends StatelessWidget {
   final MainPageContent content;
+  String goodsId;
 
   RecommendShow({Key key, this.content});
 
@@ -15,11 +17,11 @@ class RecommendShow extends StatelessWidget {
       child: ListView.builder(
           physics: NeverScrollableScrollPhysics(),
           itemCount: 3,
-          itemBuilder: (context, index) => showRecommendItem(index)),
+          itemBuilder: (context, index) => showRecommendItem(context, index)),
     );
   }
 
-  Widget showRecommendItem(index) {
+  Widget showRecommendItem(context, index) {
     String floorPic;
     switch (index) {
       case 0:
@@ -40,15 +42,15 @@ class RecommendShow extends StatelessWidget {
         children: <Widget>[
           Container(
             padding: EdgeInsets.all(2.0),
-            child: item(floorPic),
+            child: item(context, floorPic, ''),
           ),
-          recommendItem(index),
+          recommendItem(context, index),
         ],
       ),
     );
   }
 
-  Widget recommendItem(index) {
+  Widget recommendItem(context, index) {
     List<dynamic> floor;
     switch (index) {
       case 0:
@@ -70,11 +72,12 @@ class RecommendShow extends StatelessWidget {
           width: ScreenUtil().setWidth(375.0),
           child: Column(
             children: <Widget>[
+              item(context, floor.elementAt(0).image,
+                  floor.elementAt(0).goodsId),
               item(
-                floor.elementAt(0).image,
-              ),
-              item(
+                context,
                 floor.elementAt(1).image,
+                floor.elementAt(1).goodsId,
               ),
             ],
           ),
@@ -84,13 +87,19 @@ class RecommendShow extends StatelessWidget {
           child: Column(
             children: <Widget>[
               item(
+                context,
                 floor.elementAt(2).image,
+                floor.elementAt(2).goodsId,
               ),
               item(
+                context,
                 floor.elementAt(3).image,
+                floor.elementAt(3).goodsId,
               ),
               item(
+                context,
                 floor.elementAt(4).image,
+                floor.elementAt(4).goodsId,
               ),
             ],
           ),
@@ -99,10 +108,12 @@ class RecommendShow extends StatelessWidget {
     );
   }
 
-  Widget item(url) {
+  Widget item(context, url, goodsId) {
     return InkWell(
       onTap: () {
-        //TODO...通过商品ID跳转 待添加!
+        if (goodsId != null && goodsId != '') {
+          Application.router.navigateTo(context, '/detail?id=$goodsId');
+        }
       },
       child: Image.network(
         url,
