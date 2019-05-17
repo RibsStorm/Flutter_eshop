@@ -8,7 +8,13 @@ class DetailHTML extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Provide<DetailProvide>(builder: (context, child, data) {
-      return Html(data: data.goods.goodInfo.goodsDetail);
+      if(data.hasSelectLeft){
+        return Html(data: data.goods.goodInfo.goodsDetail);
+      }else{
+        return Container(
+          child: Text("这是评论区"),
+        );
+      }
     });
   }
 }
