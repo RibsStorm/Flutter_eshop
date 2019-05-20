@@ -1,5 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provide/provide.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../cart/model/cart_goods.dart';
+import '../model/goods.dart';
+import '../provide/detail_provide.dart';
 
 class DetailToolBar extends StatelessWidget {
   @override
@@ -9,7 +17,7 @@ class DetailToolBar extends StatelessWidget {
       child: Row(
         children: <Widget>[
           shoppingCart(),
-          joinCart(),
+          joinCart(context),
           buyNow(),
         ],
       ),
@@ -24,13 +32,13 @@ class DetailToolBar extends StatelessWidget {
       child: IconButton(
         icon: Icon(Icons.shopping_cart),
         onPressed: () {
-          //TODO...商品加入购物车逻辑
+          //TODO...点击跳转至 购物车页面
         },
       ),
     );
   }
 
-  Widget joinCart() {
+  Widget joinCart(BuildContext context) {
     return Container(
       width: ScreenUtil().setWidth(305),
       height: ScreenUtil().setHeight(80),
@@ -40,7 +48,7 @@ class DetailToolBar extends StatelessWidget {
       ),
       child: InkWell(
         onTap: () {
-          //TODO...商品加入购物车逻辑
+          save(context);
         },
         child: Text(
           "加入购物车",
@@ -70,5 +78,51 @@ class DetailToolBar extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  /// 实际开发肯定是将购物车的信息保存在服务器,再不济也保存在数据库,这保存在SP有点low
+  ///
+  ///创建一个 异步查询购物车信息和保存的方法
+  ///保存使用 cartInfo : XXXX 格式保存.
+  ///每次点击 添加到购物车时,将SP内的数据取出,decode后遍历是否存在相同商品
+  ///存在即count++,不存在将商品转换成cartGoods,添加到集合,再转车string,保存回SP.
+  ///购物车内,通过SP获取列表进行布局UI展示.
+  save(BuildContext context) async {
+    //获取当前页面的信息
+    Goods goods = Provide.value<DetailProvide>(context).goods;
+    SharedPreferences sp = await SharedPreferences.getInstance();
+    //拿取保存在SP的信息
+    String cartInfo = sp.getString('cartInfo');
+    List<CartGoods> cartGoods = cartInfo == null ? [] : json.decode(cartInfo);
+
+    if (cartGoods.isEmpty) {
+      //购物车集合为空,直接添加
+      cartGoods.add(CartGoods(
+          goodsId: goods.goodInfo.goodsId,
+          goodsName: goods.goodInfo.goodsName,
+          count: 1,
+          price: goods.goodInfo.presentPrice,
+          images: goods.goodInfo.image1));
+    } else {
+      //购物车集合有内容,判断一下当前添加的商品是不是已经存在购物车内
+      cartGoods.map((data) {
+        //通过goodsId来判断
+        if (data.goodsId == goods.goodInfo.goodsId) {
+          data.count = data.count + 1;
+        } else {
+          cartGoods.add(CartGoods(
+              goodsId: goods.goodInfo.goodsId,
+              goodsName: goods.goodInfo.goodsName,
+              count: 1,
+              price: goods.goodInfo.presentPrice,
+              images: goods.goodInfo.image1));
+        }
+      });
+    }
+
+    //最后将这个list再抓换成json保存回sp内.
+    String cartStr = json.encode(cartGoods).toString();
+    print("购物车内的信息:$cartStr");
+    await sp.setString('cartInfo', cartStr);
   }
 }
