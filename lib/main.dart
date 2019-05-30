@@ -4,6 +4,7 @@ import 'package:provide/provide.dart';
 
 import 'app_page.dart';
 import 'application.dart';
+import 'cart/provide/cart_provide.dart';
 import 'category/provide/category_provide.dart';
 import 'detail/provide/detail_provide.dart';
 import 'routers/routers.dart';
@@ -12,11 +13,13 @@ void main() {
   //使用Google Provide对数据进行管理
   var categoryProvide = CategoryProvide();
   var goodsDetailProvide = DetailProvide();
+  var cartProvide = CartProvide();
 
   var provides = Providers();
   provides
     ..provide(Provider<CategoryProvide>.value(categoryProvide))
-    ..provide(Provider<DetailProvide>.value(goodsDetailProvide));
+    ..provide(Provider<DetailProvide>.value(goodsDetailProvide))
+    ..provide(Provider<CartProvide>.value(cartProvide));
   runApp(ProviderNode(child: MyAPP(), providers: provides));
 }
 

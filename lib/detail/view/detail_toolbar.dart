@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provide/provide.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../cart/model/cart_goods.dart';
 import '../model/goods.dart';
 import '../provide/detail_provide.dart';
 
@@ -93,36 +92,44 @@ class DetailToolBar extends StatelessWidget {
     SharedPreferences sp = await SharedPreferences.getInstance();
     //拿取保存在SP的信息
     String cartInfo = sp.getString('cartInfo');
-    List<CartGoods> cartGoods = cartInfo == null ? [] : json.decode(cartInfo);
+    var temp = cartInfo == null ? [] : json.decode(cartInfo.toString());
+    List<Map> cartGoods = (temp as List).cast();
 
     if (cartGoods.isEmpty) {
       //购物车集合为空,直接添加
-      cartGoods.add(CartGoods(
-          goodsId: goods.goodInfo.goodsId,
-          goodsName: goods.goodInfo.goodsName,
-          count: 1,
-          price: goods.goodInfo.presentPrice,
-          images: goods.goodInfo.image1));
+      cartGoods.add({
+        'goodId': goods.goodInfo.goodsId,
+        'goodsName': goods.goodInfo.goodsName,
+        'count': 1,
+        'price': goods.goodInfo.presentPrice,
+        'images': goods.goodInfo.image1
+      });
     } else {
-      //购物车集合有内容,判断一下当前添加的商品是不是已经存在购物车内
-      cartGoods.map((data) {
+      dynamic addGoods;
+      cartGoods.forEach((data) {
         //通过goodsId来判断
-        if (data.goodsId == goods.goodInfo.goodsId) {
-          data.count = data.count + 1;
+        if (data['goodsId'] == goods.goodInfo.goodsId) {
+          data['count'] = data['count'] + 1;
         } else {
-          cartGoods.add(CartGoods(
-              goodsId: goods.goodInfo.goodsId,
-              goodsName: goods.goodInfo.goodsName,
-              count: 1,
-              price: goods.goodInfo.presentPrice,
-              images: goods.goodInfo.image1));
+          addGoods = {
+            'goodId': goods.goodInfo.goodsId,
+            'goodsName': goods.goodInfo.goodsName,
+            'count': 1,
+            'price': goods.goodInfo.presentPrice,
+            'images': goods.goodInfo.image1
+          };
         }
       });
-    }
 
-    //最后将这个list再抓换成json保存回sp内.
-    String cartStr = json.encode(cartGoods).toString();
-    print("购物车内的信息:$cartStr");
-    await sp.setString('cartInfo', cartStr);
+      if (addGoods != null) {
+        //避免在遍历里面添加,导致 并发修改异常,其实可以试试用 iterator?
+        cartGoods.add(addGoods);
+        addGoods = null;
+      }
+      //最后将这个list再抓换成json保存回sp内.
+      String cartStr = json.encode(cartGoods).toString();
+      print("购物车内的信息:$cartStr");
+      sp.setString('cartInfo', cartStr);
+    }
   }
 }
