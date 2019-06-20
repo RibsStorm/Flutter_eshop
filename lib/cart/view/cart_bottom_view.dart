@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provide/provide.dart';
 
 import '../provide/cart_provide.dart';
@@ -8,21 +9,24 @@ class CartBottomView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Provide<CartProvide>(
       builder: (context, child, data) {
-        return Row(
-          children: <Widget>[
-            selectAll(),
-            Text("全选"),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: <Widget>[
-                  showMoney(data.money),
-                  showTips(),
-                ],
+        return Container(
+          height: ScreenUtil().setHeight(120),
+          child: Row(
+            children: <Widget>[
+              selectAll(),
+              Text("全选"),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+                    showMoney(data.money),
+                    showTips(),
+                  ],
+                ),
               ),
-            ),
-            payMoney(data.count)
-          ],
+              payMoney(data.count)
+            ],
+          ),
         );
       },
     );
@@ -68,6 +72,7 @@ class CartBottomView extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             color: count == 0 ? Colors.grey : Colors.redAccent,
+            borderRadius: BorderRadius.circular(3.0),
           ),
           child: Padding(
             padding: EdgeInsets.all(12.0),
