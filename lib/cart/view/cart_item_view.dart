@@ -1,18 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_eshop/cart/model/cart_goods.dart';
+import 'package:flutter_eshop/cart/view/cart_empty_view.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provide/provide.dart';
 
-import '../../db/DatabaseHelper.dart';
 import '../../util/ToastUtil.dart';
 import '../provide/cart_provide.dart';
 import 'cart_bottom_view.dart';
+import 'cart_count_view.dart';
 
 class CartListView extends StatefulWidget {
-  final List<CartGoods> list;
-
-  CartListView({Key key, @required this.list}) : super(key: key);
+  List<CartGoods> list;
 
   @override
   _CartListViewState createState() => _CartListViewState();
@@ -21,37 +20,41 @@ class CartListView extends StatefulWidget {
 class _CartListViewState extends State<CartListView> {
   int count = 0;
   double money = 0.00;
-  bool hasSelect = false;
 
   @override
   Widget build(BuildContext context) {
-//    return SingleChildScrollView(
-//      child: Column(
-//        children: <Widget>[
-//          Container(
-//            width: ScreenUtil().setWidth(750),
-//            height: ScreenUtil().setHeight(910),
-//            margin: EdgeInsets.only(bottom: ScreenUtil().setHeight(80)),
-//            child: cartGoodsList(),
-//          ),
-//          CartBottomView(),
-//        ],
-//      ),
-//    );
-    return Stack(
-      children: <Widget>[
-        cartGoodsList(),
-        Positioned(bottom: 0.0, left: 0.0, child: CartBottomView()),
-      ],
-    );
+    count = Provide.value<CartProvide>(context).count;
+    money = Provide.value<CartProvide>(context).money;
+    return Provide<CartProvide>(builder: (context, child, data) {
+      if (data.goods.isNotEmpty) {
+        widget.list = data.goods;
+        return Container(
+          width: ScreenUtil().setWidth(750),
+          height: ScreenUtil().setHeight(1334),
+          child: Stack(
+            children: <Widget>[
+              cartGoodsList(),
+              Positioned(bottom: 0.0, left: 0.0, child: CartBottomView()),
+            ],
+          ),
+        );
+      } else {
+        return Center(
+          child: EmptyCartView(),
+        );
+      }
+    });
   }
 
   Widget cartGoodsList() {
-    return ListView.builder(
-        itemCount: widget.list.length,
-        shrinkWrap: true,
-        itemBuilder: (context, index) =>
-            cartItemView(widget.list.elementAt(index)));
+    return Padding(
+      padding: EdgeInsets.only(bottom: ScreenUtil().setHeight(100)),
+      child: ListView.builder(
+          itemCount: widget.list.length,
+          shrinkWrap: true,
+          itemBuilder: (context, index) =>
+              cartItemView(widget.list.elementAt(index))),
+    );
   }
 
 //购物车商品详情
@@ -76,23 +79,21 @@ class _CartListViewState extends State<CartListView> {
 //单个商品checkBox
   Widget goodsSelect(CartGoods item) {
     return Checkbox(
-        value: hasSelect,
+        value: item.isSelect,
         onChanged: (bool isCheck) {
           //每次点击后,刷新页面,对选择商品数量和结算的金额进行计算.
           setState(() {
-            hasSelect = isCheck;
+            item.isSelect = isCheck;
             if (isCheck) {
-              Provide.value<CartProvide>(context).refreshPayMoney(
-                  count + item.count, money + item.price * item.count);
+              count += item.count;
+              money += (item.price * item.count);
             } else {
-              int tempCount =
-                  (count - item.count) <= 0 ? 0 : count - item.count;
-              double tempMoney = (money - item.price * item.count) <= 0.00
+              count = (count - item.count) <= 0 ? 0 : count - item.count;
+              money = (money - item.price * item.count) <= 0.00
                   ? 0.00
                   : (money - item.price * item.count);
-              Provide.value<CartProvide>(context)
-                  .refreshPayMoney(tempCount, tempMoney);
             }
+            Provide.value<CartProvide>(context).refreshPayMoney(count, money);
           });
         });
   }
@@ -112,54 +113,61 @@ class _CartListViewState extends State<CartListView> {
 
   Widget goodsTipAndCount(CartGoods item) {
     return Expanded(
-        child: Column(
-      children: <Widget>[
-        Padding(
-          padding: EdgeInsets.all(12.0),
-          child: Text(
-            item.goodsName,
-            maxLines: 2,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.all(4.0),
+            child: Text(
+              item.goodsName,
+              maxLines: 2,
+              textAlign: TextAlign.left,
+            ),
           ),
-        ),
-        //TODO...差一个 商品数量加减的那个
-      ],
-    ));
+          Padding(
+            padding: EdgeInsets.all(4.0),
+            child: CartCountView(item: item),
+          ),
+        ],
+      ),
+    );
   }
 
 //商品价格 & 删除按钮
   Widget goodsPrice(CartGoods item) {
     return Container(
+      margin: EdgeInsets.only(right: 12.0),
       height: ScreenUtil().setHeight(120),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
           Text(
             "¥ ${item.price}",
             style: TextStyle(fontSize: 12.0),
+            textAlign: TextAlign.right,
           ),
           Text(
             "¥ ${item.oldPrice}",
-            style: TextStyle(fontSize: 10.0, color: Colors.grey),
+            style: TextStyle(fontSize: 8.0, color: Colors.grey),
+            textAlign: TextAlign.right,
           ),
-          IconButton(
-              alignment: Alignment.topCenter,
-              icon: Icon(CupertinoIcons.delete_simple),
-              padding: EdgeInsets.only(bottom: 1.0),
-              onPressed: () {
-                setState(() {
-                  //如果商品是选中的,点击删除,删除其对应的 统计商品数量和价格,刷新Provide
-                  if (hasSelect) {
-                    int tempCount =
-                        (count - item.count) <= 0 ? 0 : count - item.count;
-                    double tempMoney = (money - item.price * item.count) <= 0.00
-                        ? 0.00
-                        : money - item.price * item.count;
-                    Provide.value<CartProvide>(context)
-                        .refreshPayMoney(tempCount, tempMoney);
-                  }
-
-                  deleteAndRefresh(item);
-                });
-              }),
+          InkWell(
+            onTap: () {
+              //如果商品是选中的,点击删除,删除其对应的 统计商品数量和价格,刷新Provide
+              if (item.isSelect) {
+                count = (count - item.count) <= 0 ? 0 : count - item.count;
+                money = (money - item.price * item.count) <= 0.00
+                    ? 0.00
+                    : (money - item.price * item.count);
+                Provide.value<CartProvide>(context)
+                    .refreshPayMoney(count, money);
+              }
+              deleteAndRefresh(item);
+            },
+            child: Icon(CupertinoIcons.delete_simple),
+          ),
         ],
       ),
     );
@@ -168,9 +176,7 @@ class _CartListViewState extends State<CartListView> {
 //删除当前商品,并刷新SP内保存的购物车商品
   deleteAndRefresh(CartGoods item) async {
     widget.list.remove(item);
-    var db = DatabaseHelper();
-    await db.deleteItem(item.goodsId);
-//    await db.close();
+    Provide.value<CartProvide>(context).refreshCartGoods(item);
     ToastUtil.showToast("删除购物车物品成功");
   }
 }

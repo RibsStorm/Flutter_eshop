@@ -6,6 +6,7 @@ class CartGoods {
   double price;
   String images;
   double oldPrice;
+  bool isSelect = false;
 
   CartGoods(
       {this.id,
@@ -14,7 +15,8 @@ class CartGoods {
       this.count,
       this.price,
       this.images,
-      this.oldPrice});
+      this.oldPrice,
+      this.isSelect});
 
   Map<String, dynamic> toMap() {
     var map = new Map<String, dynamic>();
@@ -25,6 +27,7 @@ class CartGoods {
     map['price'] = price;
     map['images'] = images;
     map['oldPrice'] = oldPrice;
+    map['isSelect'] = isSelect == true ? 1 : 0;
     return map;
   }
 
@@ -37,13 +40,14 @@ class CartGoods {
     goods.price = map['price'];
     goods.images = map['images'];
     goods.oldPrice = map['oldPrice'];
+    goods.isSelect = map['isSelect'] == 1;
     return goods;
   }
 
   static List<CartGoods> fromMapList(List<Map<String, dynamic>> mapList) {
-    List<CartGoods> list = new List(mapList.length);
+    List<CartGoods> list = new List();
     for (int i = 0; i < mapList.length; i++) {
-      list[i] = fromMap(mapList[i]);
+      list.add(fromMap(mapList[i]));
     }
     return list;
   }

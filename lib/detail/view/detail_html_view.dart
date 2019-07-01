@@ -8,11 +8,11 @@ class DetailHTML extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Provide<DetailProvide>(builder: (context, child, data) {
-      if(data.hasSelectLeft){
+      if (data.hasSelectLeft) {
         return Html(data: data.goods.goodInfo.goodsDetail);
-      }else{
+      } else {
         return Container(
-          child: Text("这是评论区"),
+          child: Text("这是评论区,没做,自行脑补~~~"),
         );
       }
     });

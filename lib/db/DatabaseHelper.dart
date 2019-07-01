@@ -18,6 +18,7 @@ class DatabaseHelper {
   final String columnPrice = "price";
   final String columnImages = "images";
   final String columnOldPrice = "oldPrice";
+  final String columnIsSelect = "isSelect";
   static Database _db;
 
   Future<Database> get db async {
@@ -33,19 +34,45 @@ class DatabaseHelper {
   initDb() async {
     var databasesPath = await getDatabasesPath();
     String path = join(databasesPath, 'eshop.db');
-    var ourDb = await openDatabase(path, version: 1, onCreate: _onCreate);
+    var ourDb = await openDatabase(path,
+        version: 2,
+        onCreate: _onCreate,
+        onUpgrade: _onUpgrade,
+        onDowngrade: onDatabaseDowngradeDelete);
     return ourDb;
   }
 
   //创建数据库表
   void _onCreate(Database db, int version) async {
-    await db.execute(
-      "CREATE TABLE $tableName($columnId INTEGER PRIMARY KEY,$columnGoodsId TEXT,$columnGoodsName TEXT, $columnCount INTEGER,$columnPrice REAL,$columnImages TEXT,$columnOldPrice REAL)",
-    );
+    var batch = db.batch();
+    _createTableCompanyV1(batch);
+    _updateTableCompanyV1toV2(batch);
+
+    await batch.commit();
     print("Table is created");
   }
 
-//插入
+  void _onUpgrade(Database db, int oldVersion, int newVersion) async {
+    var batch = db.batch();
+    if (oldVersion == 1) {
+      _updateTableCompanyV1toV2(batch);
+    }
+    await batch.commit();
+  }
+
+  ///创建数据库--初始版本
+  void _createTableCompanyV1(Batch batch) {
+    batch.execute(
+      "CREATE TABLE $tableName($columnId INTEGER PRIMARY KEY,$columnGoodsId TEXT,$columnGoodsName TEXT, $columnCount INTEGER,$columnPrice REAL,$columnImages TEXT,$columnOldPrice REAL)",
+    );
+  }
+
+  ///更新数据库Version: 1->2.
+  void _updateTableCompanyV1toV2(Batch batch) {
+    batch.execute('ALTER TABLE $tableName ADD $columnIsSelect BOOL');
+  }
+
+  //插入
   Future<int> saveItem(CartGoods goods) async {
     var dbClient = await db;
     int res = await dbClient.insert("$tableName", goods.toMap());
@@ -101,6 +128,14 @@ class DatabaseHelper {
     return await dbClient.rawUpdate(
         'UPDATE $tableName SET $columnCount = ? WHERE $columnGoodsId = ? ',
         [itemCount, goodsId]);
+  }
+
+  //根据商品ID来更新选中状态
+  Future<int> updateItemForSelect(bool hasSelect, String goodsId) async {
+    var dbClient = await db;
+    return await dbClient.rawUpdate(
+        'UPDATE $tableName SET $columnIsSelect = ? WHERE $columnGoodsId = ? ',
+        [hasSelect ? 1 : 0, goodsId]);
   }
 
   //关闭

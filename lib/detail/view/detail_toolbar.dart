@@ -3,6 +3,7 @@ import 'package:flutter_eshop/cart/model/cart_goods.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provide/provide.dart';
 
+import '../../cart/provide/cart_provide.dart';
 import '../../db/DatabaseHelper.dart';
 import '../../util/ToastUtil.dart';
 import '../model/goods.dart';
@@ -95,6 +96,7 @@ class DetailToolBar extends StatelessWidget {
       data.price = goods.goodInfo.presentPrice;
       data.oldPrice = goods.goodInfo.oriPrice;
       data.images = goods.goodInfo.image1;
+      data.isSelect = false;
 
       await db.saveItem(data);
     } else {
@@ -102,6 +104,8 @@ class DetailToolBar extends StatelessWidget {
       count++;
       await db.updateItem(count, goods.goodInfo.goodsId);
     }
+
+    Provide.value<CartProvide>(context).getAllCartGoods();
 
 //    await db.close();
     ToastUtil.showToast("添加商品至购物车成功");
