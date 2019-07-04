@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_eshop/routers/routers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../application.dart';
 
 class EmptyCartView extends StatelessWidget {
   @override
@@ -13,7 +16,7 @@ class EmptyCartView extends StatelessWidget {
         children: <Widget>[
           cartImg(),
           emptyCartTips(),
-          buyBuyBuy(),
+          buyBuyBuy(context),
         ],
       ),
     );
@@ -59,9 +62,11 @@ class EmptyCartView extends StatelessWidget {
     );
   }
 
-  Widget buyBuyBuy() {
+  Widget buyBuyBuy(BuildContext context) {
     return MaterialButton(
-      onPressed: () {},
+      onPressed: () {
+        Application.router.navigateTo(context, Routers.cartgoryPage);
+      },
       color: Colors.red,
       child: Text(
         '随便逛逛',

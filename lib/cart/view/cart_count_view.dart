@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_eshop/cart/model/cart_goods.dart';
+import 'package:flutter_eshop/db/DatabaseHelper.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provide/provide.dart';
 
@@ -39,6 +40,7 @@ class CartCountView extends StatelessWidget {
             money = (money - item.price) <= 0.00 ? 0.00 : (money - item.price);
           }
           Provide.value<CartProvide>(context).refreshPayMoney(count, money);
+          notifyItemCount();
         }
       },
       child: Container(
@@ -64,6 +66,7 @@ class CartCountView extends StatelessWidget {
           money = money + item.price;
         }
         Provide.value<CartProvide>(context).refreshPayMoney(count, money);
+        notifyItemCount();
       },
       child: Container(
         width: ScreenUtil().setWidth(45),
@@ -90,5 +93,10 @@ class CartCountView extends StatelessWidget {
       alignment: Alignment.center,
       child: Text('${item.count}'),
     );
+  }
+
+  notifyItemCount() async {
+    var db = DatabaseHelper();
+    await db.updateItem(item.count, item.goodsId);
   }
 }

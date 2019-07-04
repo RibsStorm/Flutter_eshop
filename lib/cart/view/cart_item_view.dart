@@ -5,6 +5,7 @@ import 'package:flutter_eshop/cart/view/cart_empty_view.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provide/provide.dart';
 
+import '../../application.dart';
 import '../../util/ToastUtil.dart';
 import '../provide/cart_provide.dart';
 import 'cart_bottom_view.dart';
@@ -60,18 +61,23 @@ class _CartListViewState extends State<CartListView> {
 //购物车商品详情
   Widget cartItemView(CartGoods item) {
     print("购物车侧信息是:$item");
-    return Container(
-      height: ScreenUtil().setHeight(140),
-      width: ScreenUtil().setWidth(750),
-      decoration: BoxDecoration(
-          border: Border(bottom: BorderSide(width: 1.0, color: Colors.grey))),
-      child: Row(
-        children: <Widget>[
-          goodsSelect(item),
-          goodsImage(item),
-          goodsTipAndCount(item),
-          goodsPrice(item),
-        ],
+    return InkWell(
+      onTap: () {
+        Application.router.navigateTo(context, '/detail?id=${item.goodsId}');
+      },
+      child: Container(
+        height: ScreenUtil().setHeight(140),
+        width: ScreenUtil().setWidth(750),
+        decoration: BoxDecoration(
+            border: Border(bottom: BorderSide(width: 1.0, color: Colors.grey))),
+        child: Row(
+          children: <Widget>[
+            goodsSelect(item),
+            goodsImage(item),
+            goodsTipAndCount(item),
+            goodsPrice(item),
+          ],
+        ),
       ),
     );
   }

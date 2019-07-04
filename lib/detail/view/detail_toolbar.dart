@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_eshop/cart/model/cart_goods.dart';
+import 'package:flutter_eshop/routers/routers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provide/provide.dart';
 
+import '../../application.dart';
 import '../../cart/provide/cart_provide.dart';
 import '../../db/DatabaseHelper.dart';
 import '../../util/ToastUtil.dart';
@@ -16,7 +18,7 @@ class DetailToolBar extends StatelessWidget {
       height: ScreenUtil().setHeight(80),
       child: Row(
         children: <Widget>[
-          shoppingCart(),
+          shoppingCart(context),
           joinCart(context),
           buyNow(),
         ],
@@ -24,7 +26,7 @@ class DetailToolBar extends StatelessWidget {
     );
   }
 
-  Widget shoppingCart() {
+  Widget shoppingCart(BuildContext context) {
     return Container(
       width: ScreenUtil().setWidth(140),
       height: ScreenUtil().setHeight(120),
@@ -32,7 +34,7 @@ class DetailToolBar extends StatelessWidget {
       child: IconButton(
         icon: Icon(Icons.shopping_cart),
         onPressed: () {
-          //TODO...点击跳转至 购物车页面
+          Application.router.navigateTo(context, Routers.cartPage);
         },
       ),
     );
