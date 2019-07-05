@@ -2,6 +2,13 @@
 
 A Flutter eshop Application
 
+[Download](https://fir.im/p1te)
+
+### TODO...
+1.APP的适配问题.
+2.APP接入高德地图.
+3.APP接入支付宝.
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
