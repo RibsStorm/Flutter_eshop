@@ -12,8 +12,8 @@
 
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="flutter_eshop"
-        android:icon="@mipmap/ic_launcher">
+        android:label="Flutter_eshop"
+        android:icon="@mipmap/eshop">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
