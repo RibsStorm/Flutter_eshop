@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_eshop/routers/routers.dart';
 import 'package:flutter_eshop/util/ToastUtil.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../application.dart';
 
 class MineList extends StatelessWidget {
   @override
@@ -12,22 +15,22 @@ class MineList extends StatelessWidget {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(24.0)),
           border: Border.all(color: Colors.lightBlue, width: 1.0)),
-      child: tipsListView(),
+      child: tipsListView(context),
     );
   }
 
-  Widget tipsListView() {
+  Widget tipsListView(BuildContext context) {
     return ListView(
       children: <Widget>[
-        tips('我的优惠券'),
-        tips('地址管理'),
-        tips('客服电话'),
-        tips('关于商城'),
+        tips(context, '我的优惠券'),
+        tips(context, '地址管理'),
+        tips(context, '客服电话'),
+        tips(context, '关于这玩意'),
       ],
     );
   }
 
-  Widget tips(String tip) {
+  Widget tips(BuildContext context, String tip) {
     return Container(
       height: ScreenUtil().setHeight(100),
       decoration: BoxDecoration(
@@ -41,7 +44,11 @@ class MineList extends StatelessWidget {
           textAlign: TextAlign.center,
         ),
         onTap: () {
-          ToastUtil.showToast("没做,自己脑补...");
+          if ('关于这玩意' == tip) {
+            Application.router.navigateTo(context, Routers.aboutPage);
+          } else {
+            ToastUtil.showToast("没做,自己脑补...");
+          }
         },
       ),
     );

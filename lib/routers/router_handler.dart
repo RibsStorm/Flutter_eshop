@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_eshop/cart/cart_page.dart';
 import 'package:flutter_eshop/category/category_page.dart';
 import 'package:flutter_eshop/detail/goods_detail_view.dart';
+import 'package:flutter_eshop/mine/view/mine_about.dart';
 
 //商品详情
 Handler detailHandler = Handler(
@@ -21,4 +22,10 @@ Handler cartgoryHandler = Handler(
 Handler cartHandler = Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
   return CartPage();
+});
+
+//关于页面
+Handler aboutHandler = Handler(
+    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+  return AboutPage();
 });

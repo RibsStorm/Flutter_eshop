@@ -22,29 +22,31 @@ dependencies:
 
   cupertino_icons: ^0.1.2
   # 网络请求转菊花控件
-  flutter_spinkit: ^3.1.0
+  flutter_spinkit: 3.1.0
   # 网络请求框架
-  dio: ^2.1.2
+  dio: 2.1.2
   # 首页轮播图
-  flutter_swiper: ^1.1.6
+  flutter_swiper: 1.1.6
   # 屏幕适配
-  flutter_screenutil: ^0.5.2
+  flutter_screenutil: 0.5.2
   # flutter调用Android/IOS 系统组件(如电话,邮件,短信等)
-  url_launcher: ^5.0.2
+  url_launcher: 5.0.2
   # 下拉刷新,上来加载更多
-  flutter_easyrefresh: ^1.2.7
+  flutter_easyrefresh: 1.2.7
   # Google出品的 状态管理 Provide
-  provide: ^1.0.2
+  provide: 1.0.2
   # flutter toast
-  fluttertoast: ^3.0.4
+  fluttertoast: 3.0.4
   # 路由框架
-  fluro: "^1.4.0"
+  fluro: 1.4.0
   # html加载库
-  flutter_html: ^0.9.8
+  flutter_html: 0.9.8
   # shared preferences 持久化储存
-  shared_preferences: ^0.5.2
+  shared_preferences: 0.5.2
   # sqflite 数据库数据还是用数据库存储吧
-  sqflite: ^1.1.5
+  sqflite: 1.1.5
+  # 整一个2D动画框架玩玩
+  flare_flutter: 1.5.4
 
 dev_dependencies:
   flutter_test:
@@ -63,7 +65,8 @@ flutter:
   uses-material-design: true
 
   assets:
-   - img/
+    - img/
+    - assets/
 
   # To add assets to your application, add an assets section, like this:
   # assets:

@@ -7,6 +7,7 @@ class Routers {
   static String detailsPage = "/detail";
   static String cartgoryPage = "/cartgory";
   static String cartPage = "/cart";
+  static String aboutPage = '/mine/about';
 
   static void configRouters(Router router) {
     //路由跳转,找不到对应页面处理.
@@ -22,5 +23,7 @@ class Routers {
     router.define(cartgoryPage, handler: cartgoryHandler);
 
     router.define(cartPage, handler: cartHandler);
+
+    router.define(aboutPage, handler: aboutHandler);
   }
 }
